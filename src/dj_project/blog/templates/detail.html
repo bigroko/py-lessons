@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog item</title>
+</head>
+<body>
+Created: {{ blog.created }}<br />
+Updated: {{ blog.updated }}<br />
+Author: {{ blog.user }}<br />
+Subject: {{ blog.subject }}<br />
+Text: {{ blog.text }}<br />
+<a href="{% url 'edit' blog.id %}">Edit</a>
+<a href="{% url 'index' %}">Blog</a>
+</body>
+</html>

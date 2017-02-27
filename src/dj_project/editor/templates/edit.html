@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit item</title>
+</head>
+<body>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    <form action="{% url 'update' blog.id %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="subject" value="{{ blog.subject }}" /><br />
+        <input type="text" name="text" value="{{ blog.text }}" /><br />
+        <input type="submit" value="Update" />
+    </form>
+</body>
+</html>

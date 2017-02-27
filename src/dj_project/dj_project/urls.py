@@ -16,11 +16,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from blog.views import blog_viewset
-from editor.views import editor_viewset
+from blog.views import index, detail
+from editor.views import edit, update
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^blog/', blog_viewset, name="blog_viewset"),
-    url(r'^editor/', editor_viewset, name="editor_viewset"),
-]
+    url(r'^$', index, name='index'),
+    url(r'^blog/(?P<blog_id>[0-9]+)/$', detail, name='detail'),
+    url(r'^edit/(?P<blog_id>[0-9]+)/$', edit, name='edit'),
+    url(r'^update/(?P<blog_id>[0-9]+)/$', update, name='update'),
+    ]

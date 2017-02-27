@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+</head>
+<body>
+{% if blog_list %}
+    <ul>
+    {% for blog in blog_list %}
+        <li><a href="{% url 'detail' blog.id %}">{{ blog }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No posts are available.</p>
+{% endif %}
+<a href="/admin/">Admin</a>
+</body>
+</html>

@@ -9,6 +9,9 @@ class Tag(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name='Created')
     updated = models.DateTimeField(auto_now=True, verbose_name='Updated')
 
+    def __str__(self):
+        return self.name
+
 
 class Blog(models.Model):
     subject = models.CharField(max_length=200, verbose_name='Subject')
@@ -19,3 +22,8 @@ class Blog(models.Model):
     tags = models.ManyToManyField(Tag, verbose_name='tags', blank=True)
     created = models.DateTimeField(auto_now_add=True, verbose_name='Created')
     updated = models.DateTimeField(auto_now=True, verbose_name='Updated')
+
+    def __str__(self):
+        return "[ {}, {} ] {}".format(self.created.strftime("%x %X"),
+                                      self.user,
+                                      self.subject)
