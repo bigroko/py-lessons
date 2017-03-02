@@ -16,13 +16,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from blog.views import index, detail
-from editor.views import edit, update
+from blog.views import DetailView, IndexView
+from editor.views import update, edit
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', index, name='index'),
-    url(r'^blog/(?P<blog_id>[0-9]+)/$', detail, name='detail'),
+    url(r'^$', IndexView.as_view(), name='index'),
+    url(r'^blog/(?P<pk>[0-9]+)/$', DetailView.as_view(), name='detail'),
     url(r'^edit/(?P<blog_id>[0-9]+)/$', edit, name='edit'),
     url(r'^update/(?P<blog_id>[0-9]+)/$', update, name='update'),
     ]
