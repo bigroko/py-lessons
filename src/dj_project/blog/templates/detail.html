@@ -5,11 +5,10 @@
     <title>Blog item</title>
 </head>
 <body>
-Created: {{ blog.created }}<br />
-Updated: {{ blog.updated }}<br />
-Author: {{ blog.user }}<br />
-Subject: {{ blog.subject }}<br />
-Text: {{ blog.text }}<br />
+On {{ blog.created }}, {{ blog.user }} wrote:<br>
+<input type="text" name="subject" style="width:320px" value="{{ blog.subject }}" readonly/><br />
+<textarea name="text" style="width:320px;height:150px" readonly>{{ blog.text }}</textarea><br />
+Last update: {{ blog.updated }} by {{ blog.updater }}<br><br>
 <a href="{% url 'edit' blog.id %}">Edit item</a>
 <a href="{% url 'index' %}">Return to blog</a>
 </body>

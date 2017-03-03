@@ -6,6 +6,9 @@ from django.urls import reverse
 
 from blog.models import Blog
 
+S = "subject"
+T = "text"
+
 
 @staff_member_required
 def edit(request, blog_id):
@@ -15,16 +18,14 @@ def edit(request, blog_id):
 
 def update(request, blog_id):
     blog = get_object_or_404(Blog, pk=blog_id)
-    subject = request.POST["subject"].strip()
-    text = request.POST["text"].strip()
+    subject = request.POST[S].strip()
+    text = request.POST[T].strip()
 
-    val, err = __validate(blog, **{
-        "subject": subject,
-        "text": text
-    })
+    val, err = __validate(blog, **{S: subject, T: text})
     if val:
         blog.subject = subject
         blog.text = text
+        blog.updater = request.user
         blog.save()
     else:
         return render(request, "edit.html", {
@@ -35,12 +36,12 @@ def update(request, blog_id):
 
 
 def __validate(blog, **kwargs):
-    if kwargs["subject"] == "":
+    if kwargs[S] == "":
         return False, "Subject cannot be empty"
-    if kwargs["text"] == "":
+    if kwargs[T] == "":
         return False, "Text cannot be empty"
-    if len(kwargs["subject"]) > 200:
+    if len(kwargs[S]) > 200:
         return False, "Subject must be 200 characters max"
-    if blog.subject == kwargs["subject"] and blog.text == kwargs["text"]:
+    if blog.subject == kwargs[S] and blog.text == kwargs[T]:
         return False, "No changes were made"
     return True, ""

@@ -8,7 +8,11 @@
 {% if blog_list %}
     <ul>
     {% for blog in blog_list %}
-        <li><a href="{% url 'detail' blog.id %}">{{ blog }}</a></li>
+        <li>
+            <a href="{% url 'detail' blog.id %}">Date: {{ blog.created }}<br>
+                Subject: {{ blog.subject }}<br>
+                Tags: {{ blog.tags_str }}</a><br><br>
+        </li>
     {% endfor %}
     </ul>
 {% else %}
