@@ -8,9 +8,10 @@
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
     <form action="{% url 'update' blog.id %}" method="post">
         {% csrf_token %}
-        <input type="text" name="subject" value="{{ blog.subject }}" /><br />
-        <input type="text" name="text" value="{{ blog.text }}" /><br />
-        <input type="submit" value="Update" />
+        <input type="text" name="subject" style="width:320px" value="{{ blog.subject }}" /><br />
+        <textarea name="text" style="width:320px;height:150px">{{ blog.text}}</textarea><br />
+        <input type="submit" value="Update" /><br />
+        <a href="{% url 'index' %}">Return to blog</a>
     </form>
 </body>
 </html>

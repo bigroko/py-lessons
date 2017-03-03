@@ -15,19 +15,32 @@ def edit(request, blog_id):
 
 def update(request, blog_id):
     blog = get_object_or_404(Blog, pk=blog_id)
-    subject = request.POST['subject']
-    text = request.POST['text']
-    if subject == "" or text == "":
-        return render(request, 'edit.html', {
-            'blog': blog,
-            'error_message': "You must fill all the fields.",
+    subject = request.POST["subject"].strip()
+    text = request.POST["text"].strip()
+
+    val, err = __validate(blog, **{
+        "subject": subject,
+        "text": text
+    })
+    if val:
+        blog.subject = subject
+        blog.text = text
+        blog.save()
+    else:
+        return render(request, "edit.html", {
+            "blog": blog,
+            "error_message": err
         })
-    if len(subject) > 200:
-        return render(request, 'edit.html', {
-            'blog': blog,
-            'error_message': "Subject must be 200 characters max.",
-        })
-    blog.subject = subject
-    blog.text = text
-    blog.save()
-    return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect(reverse("index"))
+
+
+def __validate(blog, **kwargs):
+    if kwargs["subject"] == "":
+        return False, "Subject cannot be empty"
+    if kwargs["text"] == "":
+        return False, "Text cannot be empty"
+    if len(kwargs["subject"]) > 200:
+        return False, "Subject must be 200 characters max"
+    if blog.subject == kwargs["subject"] and blog.text == kwargs["text"]:
+        return False, "No changes were made"
+    return True, ""
